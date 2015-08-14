@@ -72,6 +72,37 @@ do_deploy() {
         echo "# Mask GPU interrupts" >>${DEPLOYDIR}/bcm2835-bootfiles/config.txt
         echo "mask_gpu_interrupt0=${MASK_GPU_INTERRUPT}" >>${DEPLOYDIR}/bcm2835-bootfiles/config.txt
     fi
+
+    # Set HDMI resolution
+    if [ -n "${HDMI_480P}" ]; then
+        sed -i "/#hdmi_group=/ c\hdmi_group=1" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+        sed -i "/#hdmi_mode=/ c\hdmi_mode=2" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+    fi
+
+    if [ -n "${HDMI_720P}" ]; then
+        sed -i "/#hdmi_group=/ c\hdmi_group=1" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+        sed -i "/#hdmi_mode=/ c\hdmi_mode=19" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+    fi
+
+    if [ -n "${HDMI_1080P}" ]; then
+        sed -i "/#hdmi_group=/ c\hdmi_group=1" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+        sed -i "/#hdmi_mode=/ c\hdmi_mode=16" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+    fi
+
+    if [ -n "${HDMI_800_600}" ]; then
+        sed -i "/#hdmi_group=/ c\hdmi_group=2" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+        sed -i "/#hdmi_mode=/ c\hdmi_mode=9" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+    fi
+
+    if [ -n "${HDMI_1024_768}" ]; then
+        sed -i "/#hdmi_group=/ c\hdmi_group=2" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+        sed -i "/#hdmi_mode=/ c\hdmi_mode=16" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+    fi
+
+    if [ -n "${HDMI_1440_900}" ]; then
+        sed -i "/#hdmi_group=/ c\hdmi_group=2" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+        sed -i "/#hdmi_mode=/ c\hdmi_mode=47" ${DEPLOYDIR}/bcm2835-bootfiles/config.txt
+    fi
 }
 
 addtask deploy before do_package after do_install

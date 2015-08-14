@@ -26,6 +26,7 @@ Contents:
     2.L. Image with Initramfs
     2.M. Device tree support
     2.O. Graphics stack
+    2.P. HDMI resolution
 3. Extra apps
     3.A. omxplayer
 4. Source code and mirrors
@@ -203,6 +204,26 @@ user-space driver or the vc4 DRM/KMS kernel driver. By default userland
 is used since the vc4 is still experimental. But this can be changed by
 setting the following in the local.conf
 DISTRO_FEATURES_append = " vc4-gfx"
+
+2.P. HDMI resolution
+====================
+The Raspberry Pi vc4 KMS driver cannot change mode settings on runtime
+and use the resolution that was set on boot by the GPU firmware when
+booting the ARM core. So both the configuration file config.txt and
+the weston.ini file have to be changed and the board be rebooted to
+change the HDMI output resolution.
+
+A set of common resolutions can be set using the following variables:
+
+Variable      : Details
+HDMI_480P     : 480p@60Hz resolution (a.k.a ED).
+HDMI_720P     : 720p@60Hz resolution (a.k.a HD).
+HDMI_1080P    : 1080p@60Hz resolution (a.k.a FULL HD).
+HDMI_800_600  : 800x600@60Hz resolution.
+HDMI_1024_768 : 1024x768@60Hz resolution.
+HDMI_1440_900 : 1440x900@60Hz resolution.
+
+If none is defined, the preferred resolution will be picked at boot.
 
 3. Extra apps
 =============
